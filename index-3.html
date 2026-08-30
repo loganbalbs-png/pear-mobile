@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#05070a">
+<title>Pear Phone</title>
+<style>
+:root{
+  --black:#05070a;
+  --silver:#aeb8bf;
+  --silver2:#7f8d96;
+  --blue:#0075ee;
+  --blue2:#00b8ff;
+  --panel:#0b1d32;
+  --white:#f5f7f8;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#111;font-family:Arial,Helvetica,sans-serif}
+body{display:flex;align-items:center;justify-content:center}
+button,input,textarea{font:inherit}
+
+/* THE "PIANO BLACK" PEAR BODY */
+.phone{
+  width:min(100vw,430px);
+  height:min(100vh,900px);
+  position:relative;
+  overflow:hidden;
+  border-radius:44% 44% 49% 49% / 21% 21% 39% 39%;
+  background:
+    radial-gradient(circle at 50% 18%,#262a2e 0,#0b0d10 33%,#020305 69%,#000 100%);
+  border:5px solid #141618;
+  box-shadow:inset 0 0 0 2px #737b80, inset 0 0 35px #000, 0 22px 70px #000b;
+}
+
+/* silver dotted frame around the blue screen */
+.frame{
+  position:absolute;
+  left:4.5%;right:4.5%;
+  top:4.2%;bottom:14.2%;
+  border-radius:43% 43% 42% 42% / 19% 19% 36% 36%;
+  background:
+    radial-gradient(circle,#87959d 1.15px,transparent 1.4px) 0 0/9px 9px,
+    linear-gradient(180deg,#c3cbd0,#7f8d96);
+  box-shadow:inset 0 0 0 3px #182027,inset 0 4px 12px #fff5,inset 0 -6px 12px #0007;
+}
+
+/* tiny screw/button details like the reference */
+.screw{
+  position:absolute;
+  width:18px;height:18px;border-radius:50%;
+  background:#8f9ba2;border:2px solid #26323a;
+  box-shadow:inset 0 1px 2px #fff6;
+}
+.screw::after,.screw::before{
+  content:"";position:absolute;left:4px;right:4px;top:7px;height:2px;background:#25343c;
+}
+.screw::after{transform:rotate(90deg)}
+.s1{left:14%;top:25%}.s2{right:13%;top:24%}
+.s3{left:10%;top:65%}.s4{right:10%;top:64%}
+
+/* top mini widgets */
+.widgets{
+  position:absolute;left:14%;right:14%;top:4.9%;height:13.3%;
+  display:flex;justify-content:space-between;align-items:center;z-index:4;
+}
+.gauge{
+  width:66px;height:66px;border-radius:50%;
+  background:#0c1621;border:3px solid #252f36;
+  box-shadow:inset 0 0 0 4px #73818a,0 2px 5px #0008;
+  display:flex;align-items:center;justify-content:center;position:relative;color:#fff;
+}
+.gauge .needle{position:absolute;width:29px;height:2px;background:#cfd8dc;transform:rotate(-8deg);top:32px;left:17px}
+.gauge .red{position:absolute;width:24px;height:3px;background:#e24545;right:9px;top:21px;transform:rotate(13deg)}
+.gauge .bars{display:flex;gap:2px;align-items:flex-end;height:24px}
+.gauge .bars i{display:block;width:4px;background:#35c8ff;border-radius:2px}
+.gauge .bars i:nth-child(1){height:10px}.gauge .bars i:nth-child(2){height:15px}.gauge .bars i:nth-child(3){height:21px}.gauge .bars i:nth-child(4){height:16px}
+.gauge .hl{position:absolute;left:24px;top:12px;color:#fff;font-weight:bold;font-size:8px}
+.plus{
+  position:absolute;right:8%;top:19%;width:20px;height:20px;border-radius:50%;
+  border:2px solid #28343c;color:#17242a;background:#b9c3c8;z-index:4;text-align:center;line-height:16px;font-weight:bold;
+}
+
+/* blue display cutout */
+.screen{
+  position:absolute;
+  left:10.5%;right:10.5%;
+  top:18%;bottom:25%;
+  border-radius:34% 34% 29% 29% / 11% 11% 19% 19%;
+  background:
+    radial-gradient(circle at 50% 44%,#35d0ff 0,#007ce9 28%,#0051b6 57%,#00285b 82%,#001a33 100%);
+  border:4px solid #0a1821;
+  box-shadow:inset 0 0 0 2px #2582e8,inset 0 0 34px #00aaff88,0 5px 10px #0009;
+  overflow:hidden;
+}
+.screen::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 50% 25%,#fff2,transparent 23%,transparent 70%,#0006);
+}
+.status{
+  position:absolute;top:6px;left:14px;right:14px;height:18px;z-index:7;
+  display:flex;justify-content:space-between;align-items:center;color:#fff;font-size:8px;font-weight:bold;
+  text-shadow:0 1px 2px #000;
+}
+.app-grid{
+  position:absolute;left:12%;right:12%;top:15%;bottom:11%;
+  display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:78px;
+  gap:5px 2px;z-index:5;
+}
+.app{
+  border:0;background:none;color:white;padding:0;display:flex;flex-direction:column;align-items:center;cursor:pointer
+}
+.app-icon{
+  width:55px;height:55px;display:block;
+  border-radius:50%;
+  box-shadow:0 2px 4px #0009;
+}
+.label{
+  margin-top:2px;font-size:8.5px;line-height:9px;font-weight:700;
+  text-shadow:0 1px 2px #001;color:#edf7ff;width:75px;text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+
+/* bottom dock inside dotted frame */
+.dock{
+  position:absolute;left:11%;right:11%;bottom:8%;height:69px;
+  display:grid;grid-template-columns:repeat(4,1fr);align-items:center;z-index:6
+}
+.dock .app-icon{width:53px;height:53px}
+.dock .label{display:none}
+
+/* black home bulge/button */
+.home-button{
+  position:absolute;left:50%;bottom:2.3%;transform:translateX(-50%);
+  width:48px;height:48px;border-radius:50%;z-index:8;
+  background:radial-gradient(circle at 35% 30%,#45484b,#17191b 53%,#050505 100%);
+  border:2px solid #545a5e;color:#dfe6e8;box-shadow:inset 0 0 0 2px #090a0b,0 3px 5px #0008;
+}
+.home-button svg{width:27px;height:27px}
+
+/* app pages */
+.app-view{position:absolute;inset:0;background:#071421;z-index:30;display:none}
+.app-view.show{display:block}
+.app-head{
+  height:46px;background:#081a29;border-bottom:1px solid #29404e;
+  display:flex;align-items:center;justify-content:space-between;padding:0 9px;color:white;font-size:13px;font-weight:bold
+}
+.circle-btn{width:28px;height:28px;border-radius:50%;border:1px solid #3d5360;background:#172d3d;color:#fff}
+.app-body{height:calc(100% - 46px);overflow:auto;padding:12px;color:#eef6f9;font-size:12px}
+.card{background:#0d2333;border:1px solid #294452;border-radius:7px;padding:10px;margin-bottom:8px}
+.field{width:100%;padding:9px;background:#071521;color:#fff;border:1px solid #355362;border-radius:5px;margin-bottom:7px;outline:none}
+textarea.field{min-height:260px;resize:none}
+.btn{padding:8px 11px;border-radius:5px;border:1px solid #3a5867;background:#183747;color:#fff}
+.btn.green{background:#3e8d4c}.btn.red{background:#963f48}
+.row{padding:9px 0;border-bottom:1px solid #294552}.row:last-child{border-bottom:0}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.grid3 .btn{padding:12px}
+.small{font-size:9px;color:#9fb5c0}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}.photo-box{height:70px;background:#183544;border:1px solid #345462;border-radius:4px;overflow:hidden}.photo-box img{width:100%;height:100%;object-fit:cover}
+.big{text-align:center;font-size:44px}
+</style>
+</head>
+<body>
+
+<div class="phone">
+  <div class="frame"></div>
+  <div class="screw s1"></div><div class="screw s2"></div><div class="screw s3"></div><div class="screw s4"></div>
+
+  <div class="widgets">
+    <div class="gauge"><div class="needle"></div><div class="red"></div><span class="hl">SIM</span></div>
+    <div class="gauge"><div class="bars"><i></i><i></i><i></i><i></i></div></div>
+    <div class="gauge"><div class="needle" style="transform:rotate(170deg)"></div><span class="hl">H</span><span style="position:absolute;right:13px;font-size:8px;font-weight:bold">L</span></div>
+  </div>
+  <div class="plus">+</div>
+
+  <div class="screen">
+    <div class="status">
+      <span id="time">9:41</span><span>◉ ◇ ▰</span>
+    </div>
+
+    <div class="app-grid" id="appGrid"></div>
+
+    <div class="dock" id="dock"></div>
+  </div>
+
+  <button class="home-button" onclick="goHome()" aria-label="Home">
+    <svg viewBox="0 0 64 64">
+      <path d="M36 17c-4-5 0-9 7-11-1 6-3 9-7 11Z" fill="#e1e5e5"/>
+      <path d="M34 21c-7-5-15-1-15 9 0 7-5 11-5 17 0 9 8 13 18 13s18-4 18-13c0-6-5-10-5-17 0-9-7-13-11-9Z" fill="none" stroke="#e1e5e5" stroke-width="3"/>
+    </svg>
+  </button>
+
+  <section class="app-view" id="appView">
+    <div class="app-head">
+      <button class="circle-btn" onclick="goHome()">←</button>
+      <span id="appTitle">Pear App</span>
+      <button class="circle-btn" onclick="goHome()">⌂</button>
+    </div>
+    <div class="app-body" id="appBody"></div>
+  </section>
+</div>
+
+<!-- Custom SVG app icons: flat, toy-like, outlined circles matching the new reference. -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden">
+<defs>
+<symbol id="messages" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#35cf3f" stroke="#070e15" stroke-width="3"/><path d="M16 20h32v24H28l-8 6 2-6h-6z" fill="#fff" stroke="#343d42" stroke-width="2"/><path d="M23 31h18" stroke="#aeb8bb" stroke-width="2"/></symbol>
+<symbol id="camera" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#d9dde0" stroke="#070e15" stroke-width="3"/><rect x="14" y="23" width="36" height="22" rx="4" fill="#596169"/><path d="M23 23l3-5h12l3 5" fill="#596169"/><circle cx="32" cy="34" r="8" fill="#222c31" stroke="#a3adb1" stroke-width="2"/><circle cx="32" cy="34" r="4" fill="#4d91b2"/></symbol>
+<symbol id="splashface" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#4286c9" stroke="#070e15" stroke-width="3"/><text x="32" y="39" text-anchor="middle" font-size="31" font-weight="700" font-family="Arial" fill="#fff">SF</text></symbol>
+<symbol id="stocks" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#72bde9" stroke="#070e15" stroke-width="3"/><path d="M15 39c8-3 10-9 15-7 6 3 7 9 18-8" fill="none" stroke="#fff" stroke-width="2.5"/></symbol>
+<symbol id="maps" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#ede2be" stroke="#070e15" stroke-width="3"/><path d="M17 18h30v29H17z" fill="#f2edcf"/><path d="M20 39l10-6 10 5 9-10" fill="none" stroke="#6c9b68" stroke-width="3"/><rect x="18" y="18" width="29" height="6" fill="#64b65f"/><rect x="34" y="24" width="6" height="23" fill="#f6f2dd"/><path d="M30 24h4v23h-4z" fill="#d24f58"/><circle cx="42" cy="33" r="4" fill="#f8f2cf" stroke="#d34f5b" stroke-width="3"/></symbol>
+<symbol id="photos" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#e8e7de" stroke="#070e15" stroke-width="3"/><circle cx="32" cy="32" r="6" fill="#f4c95d"/><path d="M32 13c8 0 13 7 9 14M51 32c0 8-7 13-14 9M32 51c-8 0-13-7-9-14M13 32c0-8 7-13 14-9" fill="none" stroke="#e85a67" stroke-width="8" stroke-linecap="round"/><path d="M41 17c7 4 8 13 3 17M47 41c-5 6-13 6-17 2M23 47c-6-4-7-13-2-17M17 23c5-6 13-6 17-2" fill="none" stroke="#54a65c" stroke-width="6" stroke-linecap="round"/></symbol>
+<symbol id="weather" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#74afe0" stroke="#070e15" stroke-width="3"/><circle cx="40" cy="25" r="9" fill="#f0d24f"/><path d="M16 43c2-8 11-11 17-5 5-6 16-1 15 6H16z" fill="#fff" stroke="#505d63" stroke-width="2"/></symbol>
+<symbol id="notes" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#fff" stroke="#070e15" stroke-width="3"/><path d="M12 20h40v24H12z" fill="#f3f3ee"/><path d="M12 20h40v8H12z" fill="#f0d55a"/><path d="M16 37h32" stroke="#b0b4b2" stroke-width="2"/></symbol>
+<symbol id="pearTunes" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#df4ee7" stroke="#070e15" stroke-width="3"/><path d="M37 17v26c0 5-4 8-8 8-4 0-7-2-7-6s3-6 8-6c2 0 4 .7 5 2V23l13-3v7l-11 2" fill="#fff" stroke="#59385d" stroke-width="2"/></symbol>
+<symbol id="settings" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#b5b6b3" stroke="#070e15" stroke-width="3"/><circle cx="32" cy="32" r="11" fill="#d8dad7" stroke="#555e62" stroke-width="3"/><path d="M32 13v8M32 43v8M13 32h8M43 32h8M19 19l6 6M39 39l6 6M45 19l-6 6M25 39l-6 6" stroke="#676f72" stroke-width="5"/></symbol>
+<symbol id="clock" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#ecebe5" stroke="#070e15" stroke-width="3"/><circle cx="32" cy="32" r="21" fill="#fff" stroke="#777" stroke-width="2"/><path d="M32 15v4M32 45v4M15 32h4M45 32h4" stroke="#333" stroke-width="2"/><path d="M32 21v12l9 4" fill="none" stroke="#222" stroke-width="2.5"/></symbol>
+<symbol id="videos" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#52d3c7" stroke="#070e15" stroke-width="3"/><path d="M14 24h36v8H14z" fill="#222"/><path d="m18 24 6-7 6 7 6-7 6 7 6-7" fill="none" stroke="#222" stroke-width="5"/><path d="M27 33v17l13-8z" fill="#fff"/></symbol>
+<symbol id="phone" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#46d85a" stroke="#070e15" stroke-width="3"/><path d="M20 18c4-2 8 1 11 7l-4 4c3 5 6 8 11 10l4-4c5 2 9 5 7 9-2 5-7 6-12 3-10-5-18-14-23-24-2-4 0-4 6-5Z" fill="#fff" stroke="#586168" stroke-width="2"/></symbol>
+<symbol id="mail" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#4f9fce" stroke="#070e15" stroke-width="3"/><path d="M14 22h36v23H14z" fill="#edf0ea" stroke="#495860" stroke-width="2"/><path d="m15 23 17 14 17-14" fill="none" stroke="#495860" stroke-width="2"/></symbol>
+<symbol id="compass" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#e1a844" stroke="#070e15" stroke-width="3"/><circle cx="32" cy="32" r="21" fill="#55aabb" stroke="#e8e5cb" stroke-width="4"/><path d="m40 20-6 14-14 6 6-14z" fill="#e7e7d7" stroke="#34464f" stroke-width="2"/></symbol>
+<symbol id="music" viewBox="0 0 64 64"><circle cx="32" cy="32" r="29" fill="#efb94b" stroke="#070e15" stroke-width="3"/><path d="M37 18v22c0 4-3 7-7 7s-7-2-7-6 3-6 7-6c2 0 4 1 5 2V22l12-3v7l-10 2" fill="#fff" stroke="#5c5552" stroke-width="2"/></symbol>
+</defs>
+</svg>
+
+<script>
+const APPS=[
+ ["Messages","messages"],["Camera","camera"],["SplashFace","splashface"],
+ ["Stocks","stocks"],["Maps","maps"],["Photos","photos"],
+ ["Weather","weather"],["Notes","notes"],["PearTunes","pearTunes"],
+ ["Settings","settings"],["Clock","clock"],["Videos","videos"]
+];
+const DOCK=[
+ ["Phone","phone"],["Mail","mail"],["Maps","compass"],["Music","music"]
+];
+
+const grid=document.getElementById("appGrid");
+const dock=document.getElementById("dock");
+const view=document.getElementById("appView");
+const title=document.getElementById("appTitle");
+const body=document.getElementById("appBody");
+
+function makeApp([name,id], isDock=false){
+ const b=document.createElement("button");
+ b.className="app";
+ b.innerHTML=`<svg class="app-icon" viewBox="0 0 64 64"><use href="#${id}"></use></svg>${isDock?"":`<div class="label">${name}</div>`}`;
+ b.onclick=()=>openApp(id,name);
+ return b;
+}
+APPS.forEach(a=>grid.appendChild(makeApp(a)));
+DOCK.forEach(a=>dock.appendChild(makeApp(a,true)));
+
+function goHome(){view.classList.remove("show")}
+function esc(v){return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]))}
+
+function openApp(id,name){
+ title.textContent=name;
+ body.innerHTML=getContent(id);
+ view.classList.add("show");
+ if(id==="notes")loadNotes();
+ if(id==="contacts")renderContacts();
+ if(id==="messages")renderMessages();
+ if(id==="calendar")renderEvents();
+ if(id==="photos")setupPhotos();
+ if(id==="music")setupMusic();
+ if(id==="camera")setupCamera();
+ if(id==="videos")setupVideos();
+}
+
+function getContent(id){
+ const screens={
+  messages:`<div class="card"><input id="msgTo" class="field" placeholder="Contact / name"><textarea id="msgText" class="field" style="min-height:150px" placeholder="Type a message..."></textarea><button class="btn" onclick="saveMessage()">Save message</button><div id="messageList"></div></div>`,
+  camera:`<div class="card"><video id="video" autoplay playsinline style="width:100%;aspect-ratio:4/3;background:#000;border-radius:5px"></video><div style="display:flex;gap:6px;margin-top:7px"><button class="btn" onclick="startCamera()">Start camera</button><button class="btn" onclick="capture()">Capture</button></div></div>`,
+  splashface:`<div class="card"><h2>SplashFace</h2><p>Personal social space.</p><textarea class="field" placeholder="Write something..."></textarea><button class="btn">Post</button></div>`,
+  stocks:`<div class="card"><h2>Stocks</h2><p>Personal watchlist</p><div class="row">Add symbols later.</div></div>`,
+  maps:`<div class="card"><h2>Maps</h2><button class="btn" onclick="navigator.geolocation?.getCurrentPosition(p=>alert(p.coords.latitude.toFixed(5)+', '+p.coords.longitude.toFixed(5)),()=>alert('Location unavailable'))">Use my location</button></div>`,
+  photos:`<div class="card"><input id="photoPicker" class="field" type="file" accept="image/*" multiple><div class="photo-grid" id="photos"></div></div>`,
+  weather:`<div class="card" style="text-align:center"><div class="big" id="temp">—°</div><input id="city" class="field" placeholder="Your city"><button class="btn" onclick="weatherInfo()">Check</button><p class="small">Personal weather screen. Connect your preferred weather service later.</p></div>`,
+  notes:`<div class="card"><textarea id="notes" class="field" placeholder="Write your own notes here..."></textarea><button class="btn" onclick="saveNotes()">Save</button></div>`,
+  pearTunes:`<div class="card"><input id="audio" class="field" type="file" accept="audio/*"><audio id="player" controls style="width:100%"></audio></div>`,
+  settings:`<div class="card"><h3>Settings</h3><div class="row">Personal Pear Phone</div><div class="row">Local data</div><button class="btn red" onclick="clearAll()">Clear saved data</button></div>`,
+  clock:`<div class="card" style="text-align:center"><div class="big" id="bigClock">9:41</div><div class="small" id="clockDate"></div></div>`,
+  videos:`<div class="card"><input id="videoPicker" class="field" type="file" accept="video/*"><video id="videoPlayer" controls style="width:100%;background:#000;border-radius:5px"></video></div>`,
+  phone:`<div class="card"><input id="dial" class="field" inputmode="tel" placeholder="Phone number"><div class="grid3">${["1","2","3","4","5","6","7","8","9","*","0","#"].map(n=>`<button class="btn" onclick="dial('${n}')">${n}</button>`).join("")}</div><button class="btn green" style="width:100%;margin-top:7px" onclick="call()">Call</button></div>`,
+  mail:`<div class="card"><input class="field" placeholder="To"><input class="field" placeholder="Subject"><textarea class="field" placeholder="Write your email..."></textarea><button class="btn">Save draft</button></div>`,
+  compass:`<div class="card" style="text-align:center"><h2>Compass</h2><div style="font-size:75px">◈</div><p class="small">Use the compass built into your phone.</p></div>`,
+  music:`<div class="card"><input id="audio2" class="field" type="file" accept="audio/*"><audio id="player2" controls style="width:100%"></audio></div>`
+ };
+ return screens[id]||`<div class="card"><h2>${esc(title.textContent)}</h2><p>Ready to use.</p></div>`;
+}
+
+function saveNotes(){const n=document.getElementById("notes");if(n)localStorage.setItem("pearNotes",n.value)}
+function loadNotes(){const n=document.getElementById("notes");if(n)n.value=localStorage.getItem("pearNotes")||""}
+function saveMessage(){const t=document.getElementById("msgText"),to=document.getElementById("msgTo");if(!t?.value.trim())return;const a=JSON.parse(localStorage.getItem("messages")||"[]");a.unshift({to:to.value.trim(),text:t.value.trim(),time:new Date().toLocaleString()});localStorage.setItem("messages",JSON.stringify(a));to.value="";t.value="";renderMessages()}
+function renderMessages(){const l=document.getElementById("messageList");if(!l)return;const a=JSON.parse(localStorage.getItem("messages")||"[]");l.innerHTML=a.length?a.map(m=>`<div class="row"><b>${esc(m.to||"Message")}</b><br>${esc(m.text)}<br><span class="small">${esc(m.time)}</span></div>`).join(""):`<p class="small">No saved messages.</p>`}
+function dial(n){const d=document.getElementById("dial");if(d)d.value+=n}
+function call(){const d=document.getElementById("dial");if(d?.value)alert("Calling "+d.value)}
+function setupPhotos(){const p=document.getElementById("photoPicker"),g=document.getElementById("photos");if(!p)return;p.onchange=e=>[...e.target.files].forEach(f=>{const r=new FileReader();r.onload=()=>{const a=JSON.parse(localStorage.getItem("photos")||"[]");a.unshift(r.result);localStorage.setItem("photos",JSON.stringify(a));renderPhotoGrid()};r.readAsDataURL(f)});renderPhotoGrid()}
+function renderPhotoGrid(){const g=document.getElementById("photos");if(!g)return;const a=JSON.parse(localStorage.getItem("photos")||"[]");g.innerHTML=a.map(x=>`<div class="photo-box"><img src="${x}" alt=""></div>`).join("")}
+function setupMusic(){const p=document.getElementById("audio"),a=document.getElementById("player");if(p)p.onchange=e=>{if(e.target.files[0])a.src=URL.createObjectURL(e.target.files[0])}}
+function setupVideos(){const p=document.getElementById("videoPicker"),v=document.getElementById("videoPlayer");if(p)p.onchange=e=>{if(e.target.files[0])v.src=URL.createObjectURL(e.target.files[0])}}
+function setupCamera(){}
+async function startCamera(){try{const s=await navigator.mediaDevices.getUserMedia({video:true});document.getElementById("video").srcObject=s}catch(e){alert("Camera access unavailable.")}}
+function capture(){const v=document.getElementById("video");if(!v?.srcObject)return;const c=document.createElement("canvas");c.width=v.videoWidth;c.height=v.videoHeight;c.getContext("2d").drawImage(v,0,0);const a=JSON.parse(localStorage.getItem("photos")||"[]");a.unshift(c.toDataURL("image/jpeg",.86));localStorage.setItem("photos",JSON.stringify(a));alert("Saved to Photos.")}
+function weatherInfo(){const c=document.getElementById("city"),t=document.getElementById("temp");if(c&&t)t.textContent="—°"}
+function clearAll(){if(confirm("Clear your Pear Phone data?")){["pearNotes","messages","photos"].forEach(k=>localStorage.removeItem(k));alert("Cleared.")}}
+function updateClock(){const d=new Date(),h=d.getHours()%12||12,m=String(d.getMinutes()).padStart(2,"0");document.getElementById("time").textContent=`${h}:${m}`;const bc=document.getElementById("bigClock"),cd=document.getElementById("clockDate");if(bc)bc.textContent=`${h}:${m}:${String(d.getSeconds()).padStart(2,"0")}`;if(cd)cd.textContent=d.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"})}
+setInterval(updateClock,1000);updateClock();
+</script>
+</body>
+</html>
