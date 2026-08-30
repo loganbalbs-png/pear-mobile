@@ -1,1 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
 
+    <title>Pear Phone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="phone">
+    <div class="screen">
+
+        <!-- status bar -->
+        <div class="status-bar">
+            <span id="time">9:41</span>
+            <span>● ● ▰</span>
+        </div>
+
+        <!-- apps -->
+        <div class="app-grid" id="appGrid"></div>
+
+        <!-- bottom button -->
+        <div class="bottom">
+            <div class="page-dots">
+                <span class="active"></span>
+                <span></span>
+            </div>
+
+            <button class="pear-button" onclick="goHome()">●</button>
+        </div>
+
+        <!-- app screen -->
+        <div class="app-screen hidden" id="appScreen">
+
+            <div class="app-header">
+                <button onclick="goHome()">←</button>
+                <span id="appTitle">Pear App</span>
+                <button onclick="goHome()">⌂</button>
+            </div>
+
+            <div class="app-content" id="appContent"></div>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
