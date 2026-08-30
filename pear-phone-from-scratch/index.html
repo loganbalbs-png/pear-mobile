@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#050609">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Pear Phone</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="device">
+  <div class="outer">
+    <div class="face">
+      <!-- top decorative instruments -->
+      <div class="meter left-meter">
+        <div class="meter-glass">
+          <div class="meter-arc"></div>
+          <div class="meter-needle"></div>
+          <div class="meter-star">★</div>
+          <div class="meter-caption">SBMAIL</div>
+        </div>
+      </div>
+
+      <div class="meter signal-meter">
+        <div class="signal-bars"><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+
+      <div class="meter dial-meter">
+        <div class="dial-mark h">H</div>
+        <div class="dial-mark l">L</div>
+        <div class="dial-needle"></div>
+        <div class="dial-red"></div>
+        <div class="dial-blue"></div>
+      </div>
+
+      <div class="tiny-screw s1"></div>
+      <div class="tiny-screw s2"></div>
+      <div class="tiny-screw s3"></div>
+      <div class="tiny-screw s4"></div>
+
+      <!-- actual blue screen -->
+      <div class="blue-panel">
+        <div class="top-line">
+          <span id="time">9:41</span>
+          <span class="signal">◉ ◇ ▰</span>
+        </div>
+
+        <div class="apps" id="apps"></div>
+        <div class="dock" id="dock"></div>
+      </div>
+
+      <!-- physical home button -->
+      <button class="physical-home" id="homeButton" aria-label="Home">
+        <svg viewBox="0 0 64 64">
+          <path d="M39 16c-4-5 0-9 7-11-1 6-3 9-7 11Z" fill="#e7e9e7"/>
+          <path d="M34 22c-7-5-15-1-15 9 0 7-5 11-5 17 0 9 8 13 18 13s18-4 18-13c0-6-5-10-5-17 0-9-7-13-11-9Z" fill="none" stroke="#e7e9e7" stroke-width="3"/>
+        </svg>
+      </button>
+
+      <!-- app pages -->
+      <section class="app-view" id="appView">
+        <header class="app-header">
+          <button id="back" class="head-btn">←</button>
+          <strong id="appTitle">Pear App</strong>
+          <button id="home" class="head-btn">⌂</button>
+        </header>
+        <div class="app-content" id="appContent"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- Custom vector app icons -->
+<svg width="0" height="0" style="position:absolute;overflow:hidden">
+<defs>
+  <symbol id="messages" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#38d94b" stroke="#10161a" stroke-width="5"/>
+    <path d="M23 29h54v36H44L29 76l4-11h-10z" fill="#fff" stroke="#4b5659" stroke-width="3"/>
+  </symbol>
+
+  <symbol id="camera" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#d9dddc" stroke="#10161a" stroke-width="5"/>
+    <rect x="19" y="33" width="62" height="39" rx="6" fill="#535d61"/>
+    <path d="M34 33l6-9h20l6 9" fill="#606a6e"/>
+    <circle cx="50" cy="52" r="15" fill="#242c30" stroke="#b6c1c4" stroke-width="3"/>
+  </symbol>
+
+  <symbol id="splashface" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#3a72b5" stroke="#10161a" stroke-width="5"/>
+    <text x="50" y="63" text-anchor="middle" font-family="Arial" font-size="48" font-weight="700" fill="#fff">SF</text>
+  </symbol>
+
+  <symbol id="stocks" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#73b9e6" stroke="#10161a" stroke-width="5"/>
+    <path d="M12 61c14-9 18-17 29-10 12 8 19 18 39-20" fill="none" stroke="#fff" stroke-width="4"/>
+    <path d="M50 12v76M12 50h76" stroke="#d9f2ff" stroke-width="2" opacity=".55"/>
+  </symbol>
+
+  <symbol id="maps" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#eee2bb" stroke="#10161a" stroke-width="5"/>
+    <rect x="17" y="17" width="66" height="66" fill="#f3edcf"/>
+    <path d="M17 40h66" stroke="#5ab35c" stroke-width="8"/>
+    <path d="M54 17v66" stroke="#df5557" stroke-width="6"/>
+    <path d="M26 74c9-10 17-13 25-8 8 4 12 8 28-6" fill="none" stroke="#7ea46b" stroke-width="5"/>
+    <rect x="30" y="46" width="28" height="18" rx="3" fill="#397aaa"/>
+    <text x="44" y="59" text-anchor="middle" font-family="Arial" font-size="11" font-weight="700" fill="#fff">280</text>
+    <circle cx="68" cy="34" r="7" fill="#f7f4e4" stroke="#db5257" stroke-width="4"/>
+  </symbol>
+
+  <symbol id="photos" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#f0ece2" stroke="#10161a" stroke-width="5"/>
+    <circle cx="50" cy="50" r="10" fill="#f3ca4b"/>
+    <path d="M50 12c11 0 20 9 15 20" fill="none" stroke="#e47a68" stroke-width="13" stroke-linecap="round"/>
+    <path d="M88 50c0 11-9 20-20 15" fill="none" stroke="#d66c63" stroke-width="13" stroke-linecap="round"/>
+    <path d="M50 88c-11 0-20-9-15-20" fill="none" stroke="#63b560" stroke-width="13" stroke-linecap="round"/>
+    <path d="M12 50c0-11 9-20 20-15" fill="none" stroke="#63a9bd" stroke-width="13" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="weather" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#75b4e4" stroke="#10161a" stroke-width="5"/>
+    <circle cx="63" cy="36" r="15" fill="#f3d249"/>
+    <path d="M24 66c3-13 17-18 27-9 9-9 25-4 27 9H24Z" fill="#fff" stroke="#637075" stroke-width="3"/>
+  </symbol>
+
+  <symbol id="notes" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#fff" stroke="#10161a" stroke-width="5"/>
+    <rect x="20" y="22" width="60" height="56" fill="#f8f6ee"/>
+    <rect x="20" y="22" width="60" height="15" fill="#efd14c"/>
+    <path d="M23 52h54M23 65h54" stroke="#b8bcb8" stroke-width="3"/>
+  </symbol>
+
+  <symbol id="tunes" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#e84fe5" stroke="#10161a" stroke-width="5"/>
+    <path d="M60 21v48c0 7-5 12-12 12s-11-4-11-10 5-10 12-10c3 0 7 1 9 3V31l21-5v12l-19 4" fill="#fff" stroke="#81477d" stroke-width="3"/>
+  </symbol>
+
+  <symbol id="settings" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#b8b9b7" stroke="#10161a" stroke-width="5"/>
+    <circle cx="50" cy="50" r="18" fill="#d8dbd8" stroke="#70777b" stroke-width="3"/>
+    <path d="M50 16v16M50 68v16M16 50h16M68 50h16M26 26l11 11M63 63l11 11M74 26L63 37M37 63L26 74" stroke="#666e72" stroke-width="8"/>
+  </symbol>
+
+  <symbol id="clock" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#f0ece1" stroke="#10161a" stroke-width="5"/>
+    <circle cx="50" cy="50" r="34" fill="#fff" stroke="#777d7f" stroke-width="3"/>
+    <path d="M50 17v9M50 74v9M17 50h9M74 50h9" stroke="#36393b" stroke-width="3"/>
+    <path d="M50 29v22l16 8" fill="none" stroke="#26292c" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+
+  <symbol id="videos" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#55d1c5" stroke="#10161a" stroke-width="5"/>
+    <rect x="17" y="28" width="66" height="18" fill="#202629"/>
+    <path d="M25 28l10-12 10 12 10-12 10 12 10-12" fill="none" stroke="#202629" stroke-width="8"/>
+    <path d="M39 51v29l24-15z" fill="#fff"/>
+  </symbol>
+
+  <symbol id="phone" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#47d85b" stroke="#10161a" stroke-width="5"/>
+    <path d="M30 23c7-3 13 2 18 11l-7 7c4 7 9 11 16 14l7-7c8 3 14 8 11 14-3 7-10 9-19 5-15-7-28-19-36-35-3-6 0-7 10-9Z" fill="#fff" stroke="#677075" stroke-width="3"/>
+  </symbol>
+
+  <symbol id="mail" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#54aedd" stroke="#10161a" stroke-width="5"/>
+    <rect x="16" y="24" width="68" height="52" rx="4" fill="#f0f1eb" stroke="#667176" stroke-width="3"/>
+    <path d="m18 26 32 27 32-27" fill="none" stroke="#667176" stroke-width="3"/>
+  </symbol>
+
+  <symbol id="compass" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#dba945" stroke="#10161a" stroke-width="5"/>
+    <circle cx="50" cy="50" r="35" fill="#3dabb0" stroke="#eee6cf" stroke-width="5"/>
+    <path d="m66 27-10 26-25 14 10-26z" fill="#f3f0df" stroke="#44545a" stroke-width="3"/>
+  </symbol>
+
+  <symbol id="music" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="46" fill="#e7b449" stroke="#10161a" stroke-width="5"/>
+    <path d="M59 21v42c0 7-5 12-12 12s-11-4-11-10 5-10 12-10c3 0 6 1 8 3V30l22-5v12l-19 4" fill="#fff" stroke="#6e665b" stroke-width="3"/>
+  </symbol>
+</defs>
+</svg>
+
+<script>
+const apps = [
+  ["Messages","messages"],
+  ["Camera","camera"],
+  ["SplashFace","splashface"],
+  ["Stocks","stocks"],
+  ["Maps","maps"],
+  ["Photos","photos"],
+  ["Weather","weather"],
+  ["Notes","notes"],
+  ["PearTunes","tunes"],
+  ["Settings","settings"],
+  ["Clock","clock"],
+  ["Videos","videos"]
+];
+const dockApps = [
+  ["Phone","phone"],
+  ["Mail","mail"],
+  ["Compass","compass"],
+  ["Music","music"]
+];
+
+const grid=document.getElementById("apps");
+const dock=document.getElementById("dock");
+const appView=document.getElementById("appView");
+const appTitle=document.getElementById("appTitle");
+const appContent=document.getElementById("appContent");
+
+function addApp(target,[name,id],dockMode=false){
+  const b=document.createElement("button");
+  b.className=dockMode?"dock-app":"app";
+  b.innerHTML=`<svg class="${dockMode?"dock-icon":"app-icon"}" viewBox="0 0 100 100"><use href="#${id}"></use></svg>${dockMode?"":`<span>${name}</span>`}`;
+  b.onclick=()=>openApp(id,name);
+  target.appendChild(b);
+}
+apps.forEach(a=>addApp(grid,a));
+dockApps.forEach(a=>addApp(dock,a,true));
+
+function esc(v){
+  return String(v).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[c]));
+}
+function goHome(){appView.classList.remove("show");stopCamera();}
+document.getElementById("homeButton").onclick=goHome;
+document.getElementById("back").onclick=goHome;
+document.getElementById("home").onclick=goHome;
+
+function openApp(id,name){
+  appTitle.textContent=name;
+  appContent.innerHTML=screens[id]||`<div class="card"><h3>${esc(name)}</h3><p>Ready.</p></div>`;
+  appView.classList.add("show");
+  if(id==="notes")loadNotes();
+  if(id==="messages")renderMessages();
+  if(id==="photos")setupPhotos();
+  if(id==="camera")setupCamera();
+  if(id==="clock")clockPage();
+  if(id==="music"||id==="tunes")setupAudio(id);
+}
+
+const screens={
+ notes:`<div class="card"><textarea id="notes" class="field notes-area" placeholder="Write your own notes..."></textarea><div class="actions"><button class="btn" onclick="saveNotes()">Save</button><button class="btn" onclick="clearNotes()">Clear</button></div></div>`,
+ messages:`<div class="card"><input id="msgTo" class="field" placeholder="Contact"><textarea id="msgText" class="field" placeholder="Message..." style="min-height:150px"></textarea><button class="btn" onclick="saveMessage()">Save message</button><div id="messagesList"></div></div>`,
+ camera:`<div class="card"><video id="cam" autoplay playsinline></video><div class="actions"><button class="btn" onclick="startCamera()">Camera</button><button class="btn" onclick="takePhoto()">Capture</button></div></div>`,
+ photos:`<div class="card"><input id="picker" class="field" type="file" accept="image/*" multiple><div id="photoGrid" class="photo-grid"></div></div>`,
+ clock:`<div class="card center"><div id="bigClock" class="big-clock"></div><div id="clockDate" class="small"></div></div>`,
+ music:`<div class="card"><input id="musicPicker" class="field" type="file" accept="audio/*"><audio id="musicPlayer" controls></audio></div>`,
+ tunes:`<div class="card"><input id="tunesPicker" class="field" type="file" accept="audio/*"><audio id="tunesPlayer" controls></audio></div>`,
+ phone:`<div class="card"><input id="dial" class="field" placeholder="Phone number" inputmode="tel"><div class="dialpad">${["1","2","3","4","5","6","7","8","9","*","0","#"].map(x=>`<button class="btn" onclick="dial('${x}')">${x}</button>`).join("")}</div><button class="btn green" onclick="call()">Call</button></div>`,
+ mail:`<div class="card"><input class="field" placeholder="To"><input class="field" placeholder="Subject"><textarea class="field notes-area" placeholder="Write email..."></textarea><button class="btn">Save draft</button></div>`,
+ maps:`<div class="card center"><h3>Maps</h3><button class="btn" onclick="window.open('https://maps.google.com','_blank','noopener')">Open Maps</button></div>`,
+ weather:`<div class="card center"><div class="weather-big">☀</div><div class="big-clock" id="temp">--°</div><input class="field" id="city" placeholder="City"><button class="btn" onclick="weather()">Check</button></div>`,
+ settings:`<div class="card"><h3>My Pear Phone</h3><p class="small">Notes, messages and photos are saved locally on this device/browser.</p><button class="btn red" onclick="clearData()">Clear saved data</button></div>`,
+ stocks:`<div class="card"><input id="ticker" class="field" placeholder="Ticker"><button class="btn" onclick="saveTicker()">Add</button><div id="tickers"></div></div>`,
+ splashface:`<div class="card"><textarea class="field" placeholder="Write a post..."></textarea><button class="btn">Post</button></div>`,
+ videos:`<div class="card"><input id="videoPicker" class="field" type="file" accept="video/*"><video id="videoPlayer" controls></video></div>`,
+ compass:`<div class="card center"><div class="compass-icon">◈</div><div class="small">Compass</div></div>`
+};
+
+function saveNotes(){const n=document.getElementById("notes");if(n)localStorage.setItem("pearNotes",n.value)}
+function loadNotes(){const n=document.getElementById("notes");if(n)n.value=localStorage.getItem("pearNotes")||""}
+function clearNotes(){const n=document.getElementById("notes");if(n){n.value="";localStorage.removeItem("pearNotes")}}
+
+function saveMessage(){
+ const to=document.getElementById("msgTo"),text=document.getElementById("msgText");
+ if(!text?.value.trim())return;
+ const a=JSON.parse(localStorage.getItem("pearMessages")||"[]");
+ a.unshift({to:to.value.trim()||"Message",text:text.value.trim(),time:new Date().toLocaleString()});
+ localStorage.setItem("pearMessages",JSON.stringify(a));to.value="";text.value="";renderMessages();
+}
+function renderMessages(){
+ const l=document.getElementById("messagesList");if(!l)return;
+ const a=JSON.parse(localStorage.getItem("pearMessages")||"[]");
+ l.innerHTML=a.length?a.map(m=>`<div class="row"><b>${esc(m.to)}</b><br>${esc(m.text)}<br><span class="small">${esc(m.time)}</span></div>`).join(""):`<p class="small">No saved messages.</p>`;
+}
+
+function dial(n){const d=document.getElementById("dial");if(d)d.value+=n}
+function call(){const d=document.getElementById("dial");if(d?.value)alert("Calling "+d.value)}
+
+let stream=null;
+function setupCamera(){}
+async function startCamera(){
+ try{stream=await navigator.mediaDevices.getUserMedia({video:true});document.getElementById("cam").srcObject=stream}
+ catch{alert("Camera permission was not available.")}
+}
+function takePhoto(){
+ const v=document.getElementById("cam");if(!v?.videoWidth)return;
+ const c=document.createElement("canvas");c.width=v.videoWidth;c.height=v.videoHeight;c.getContext("2d").drawImage(v,0,0);
+ const a=JSON.parse(localStorage.getItem("pearPhotos")||"[]");a.unshift(c.toDataURL("image/jpeg",.88));localStorage.setItem("pearPhotos",JSON.stringify(a));alert("Photo saved.");
+}
+function stopCamera(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}}
+
+function setupPhotos(){
+ const p=document.getElementById("picker");if(!p)return;
+ renderPhotos();
+ p.onchange=e=>[...e.target.files].forEach(f=>{const r=new FileReader();r.onload=()=>{const a=JSON.parse(localStorage.getItem("pearPhotos")||"[]");a.unshift(r.result);localStorage.setItem("pearPhotos",JSON.stringify(a));renderPhotos()};r.readAsDataURL(f)})
+}
+function renderPhotos(){
+ const g=document.getElementById("photoGrid");if(!g)return;
+ const a=JSON.parse(localStorage.getItem("pearPhotos")||"[]");g.innerHTML=a.map(x=>`<div class="photo-box"><img src="${x}" alt=""></div>`).join("");
+}
+function setupAudio(id){
+ const p=document.getElementById(id==="tunes"?"tunesPicker":"musicPicker");
+ const a=document.getElementById(id==="tunes"?"tunesPlayer":"musicPlayer");
+ if(p)p.onchange=e=>{if(e.target.files[0])a.src=URL.createObjectURL(e.target.files[0])}
+}
+function clockPage(){updateClock();setInterval(updateClock,1000)}
+function updateClock(){
+ const d=new Date(),h=d.getHours()%12||12,m=String(d.getMinutes()).padStart(2,"0"),s=String(d.getSeconds()).padStart(2,"0");
+ const b=document.getElementById("bigClock"),dt=document.getElementById("clockDate");
+ if(b)b.textContent=`${h}:${m}:${s}`;
+ if(dt)dt.textContent=d.toLocaleDateString(undefined,{weekday:"long",month:"long",day:"numeric"});
+ document.getElementById("time").textContent=`${h}:${m}`;
+}
+function weather(){document.getElementById("temp").textContent="—°"}
+function saveTicker(){const t=document.getElementById("ticker");if(!t?.value.trim())return;const a=JSON.parse(localStorage.getItem("pearTickers")||"[]");a.unshift(t.value.trim().toUpperCase());localStorage.setItem("pearTickers",JSON.stringify([...new Set(a)]));renderTickers();t.value=""}
+function renderTickers(){const e=document.getElementById("tickers");if(!e)return;const a=JSON.parse(localStorage.getItem("pearTickers")||"[]");e.innerHTML=a.map(x=>`<div class="row">${esc(x)}</div>`).join("")}
+function clearData(){if(confirm("Clear your saved Pear Phone data?")){["pearNotes","pearMessages","pearPhotos","pearTickers"].forEach(k=>localStorage.removeItem(k));alert("Cleared.")}}
+
+updateClock();
+</script>
+</body>
+</html>
