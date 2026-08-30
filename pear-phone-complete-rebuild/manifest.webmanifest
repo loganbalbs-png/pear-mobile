@@ -1,0 +1,9 @@
+{
+  "name":"Pear Phone",
+  "short_name":"Pear Phone",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#050608",
+  "theme_color":"#050608",
+  "icons":[]
+}
